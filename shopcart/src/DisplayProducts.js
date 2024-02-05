@@ -1,43 +1,75 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const DisplayProducts = ({ products, onQuantityChange }) => {
   // Initialize with null since no product is selected initially
   const [activeProductId, setActiveProductId] = useState(null);
 
-  // Function to show modal for a specific product
   const handleShow = (productId) => setActiveProductId(productId);
-  // Function to close the modal
   const handleClose = () => setActiveProductId(null);
+
+  const incrementQuantity = (productId) => {
+    onQuantityChange(
+      productId,
+      products.find((p) => p.id === productId).quantity + 1
+    );
+  };
+
+  const decrementQuantity = (productId) => {
+    onQuantityChange(
+      productId,
+      products.find((p) => p.id === productId).quantity - 1
+    );
+  };
 
   return (
     <div>
       {products.map((product) => (
         <div key={product.id} className="row align-items-center my-2 mx-2">
+          {/* product display */}
           <div className="col">
             <p className="product-name">{product.name}</p>
             <img
               className="product-image"
               src={product.image}
               alt={product.name}
-              onClick={() => handleShow(product.id)} // Pass the product's id instead of just setting show to true
+              onClick={() => handleShow(product.id)}
               style={{ cursor: "pointer" }}
             />
           </div>
-          <div className="col quantity-input-container">
-            <input
-              className="quantity-input"
-              type="number"
-              min="0"
-              max="100"
-              value={product.quantity}
-              onChange={(e) =>
-                onQuantityChange(product.id, parseInt(e.target.value))
-              }
-            />
-            <span> quantity</span>
+
+          {/* quantity update */}
+          <div className="col quantity-container">
+            <div className="row">
+              <div className="col-12 text-right">
+                <div className="quantity-label">Quantity</div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-4 text-right">
+                <FontAwesomeIcon
+                  icon={faPlusCircle}
+                  className="btn btn-secondary mx-1 quantity-change"
+                  onClick={() => incrementQuantity(product.id)}
+                />
+              </div>
+              <div className="col-4 text-left">
+                <FontAwesomeIcon
+                  icon={faMinusCircle}
+                  className="btn btn-secondary mx-1 quantity-change"
+                  onClick={() => decrementQuantity(product.id)}
+                />
+              </div>
+              <div className="col-4 text-center">
+                <span className="quantity-display"> {product.quantity} </span>
+              </div>
+            </div>
           </div>
-          {activeProductId === product.id && ( // Check if this product's modal should be shown
+
+          {/* modal */}
+          {activeProductId === product.id && (
             <Modal show={activeProductId !== null} onHide={handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>{product.name}</Modal.Title>
