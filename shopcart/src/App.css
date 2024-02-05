@@ -1,4 +1,12 @@
 /* App.css */
+.container {
+  margin-top: 3em;
+}
+
+.page-title {
+  padding-bottom: 1em;
+}
+
 .bg-light-blue {
   background-color: #3bc4f1;
 }
@@ -12,8 +20,9 @@
   border-bottom: 1px solid #ccc;
 }
 
-input[type="number"] {
-  margin-right: 5px;
+.nav-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .product-row {
@@ -65,4 +74,17 @@ input[type="number"] {
 
 .fa-shopping-cart {
   margin-right: 1em;
+}
+
+.cart-quantity {
+  font-weight: bold;
+}
+
+.btn-success {
+  margin-top: 2em;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
 }

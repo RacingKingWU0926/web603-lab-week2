@@ -25,7 +25,8 @@ const DisplayProducts = ({ products, onQuantityChange }) => {
   };
 
   return (
-    <div>
+    <div className="container">
+      <h1 className="page-title">Products</h1>
       {products.map((product) => (
         <div key={product.id} className="row align-items-center my-2 mx-2">
           {/* product display */}

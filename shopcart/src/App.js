@@ -1,12 +1,16 @@
 // App.js
 import React, { Component } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { products } from "./Products";
-import Nav from "./Nav";
+import Cart from "./Cart";
 import DisplayProducts from "./DisplayProducts";
+import Nav from "./Nav";
+
+const maxPurchase = 20;
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +21,7 @@ class App extends Component {
   }
 
   handleQuantityChange = (productId, quantity) => {
-    const newQuantity = Math.min(Math.max(quantity, 0), 100);
+    const newQuantity = Math.min(Math.max(quantity, 0), maxPurchase);
 
     this.setState((prevState) => ({
       products: prevState.products.map((product) => {
@@ -37,14 +41,35 @@ class App extends Component {
   };
 
   render() {
+    const { products } = this.state;
+
     return (
-      <div className="shop_cart">
-        <Nav itemCount={this.calculateTotalItems()} />
-        <DisplayProducts
-          products={this.state.products}
-          onQuantityChange={this.handleQuantityChange}
-        />
-      </div>
+      <Router>
+        <div className="shop_cart">
+          <Nav itemCount={this.calculateTotalItems()} />
+          <Routes>
+            {/* Home Page */}
+            <Route
+              path="/"
+              element={
+                <DisplayProducts
+                  products={products}
+                  onQuantityChange={this.handleQuantityChange}
+                />
+              }
+            />
+            {/* Checkout Page */}
+            <Route
+              path="/checkout"
+              element={
+                <Cart
+                  products={products.filter((product) => product.quantity > 0)}
+                />
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
     );
   }
 }
