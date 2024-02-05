@@ -1,5 +1,14 @@
-# web603-lab-week1
+# web603-lab-week2
 
+## Getting Started
+
+### Mirror week 1's Repository
+
+```
+https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository#mirroring-a-repository
+```
+
+### Commands
 ```
 npx create-react-app shopcart
 
